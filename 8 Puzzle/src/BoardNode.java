@@ -46,8 +46,8 @@ public class BoardNode {
 		return parent;
 	}
 	
-	protected BoardNode childNode(String action) {
-		BoardNode newChildNode = new BoardNode(state.getPossibleStates().get(action), action, pathCost+1, depth+1, this);
+	protected BoardNode childNode(Coordinates action) {
+		BoardNode newChildNode = new BoardNode(state.processMove(action), action.getActionIdentifier(), pathCost+1, depth+1, this);
 		return newChildNode;
 	}
 	
