@@ -30,6 +30,16 @@ public class Board {
 		swap(newBlank.getX(), newBlank.getY());
 	}
 	
+	public boolean isSolvable() {
+		int counter = 0;
+		for(int i = 0; i < 9; i++) {
+			if ( i+1 < 9 && board[i/3][i%3] != 0 && board[(i+1)/3][(i+1)%3] != 0 &&  board[i/3][i%3] < board[(i+1)/3][(i+1)%3]) {
+				counter++;
+			}
+		}
+		return (counter % 2 == 0);
+	}
+	
 	public List<Coordinates> getAdjacent() {
 		ArrayList<Coordinates> returnList = new ArrayList<Coordinates>();
 		int x = blank.getX();
@@ -108,6 +118,28 @@ public class Board {
 			}
 		}
 		return true;
+	}
+	
+	public int h1() {
+		int counter = 0;
+		for(int i = 0; i < board.length; i++) {
+			for(int j = 0; j < board[i].length; j++) {
+				if (board[i][j] != (i*3)+j) {
+					counter++;
+				}
+			}
+		}
+		return counter;
+	}
+	
+	public int h2() {
+		int sum = 0;
+		for(int i = 0; i < board.length; i++) {
+			for(int j = 0; j < board[i].length; j++) {
+				sum+= Math.abs( ((i*3)+j) - board[i][j] ); 
+			}
+		}
+		return sum;
 	}
 }
 

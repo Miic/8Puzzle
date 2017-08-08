@@ -46,6 +46,18 @@ public class BoardNode {
 		return parent;
 	}
 	
+	public int h1() {
+		return state.h1();
+	}
+	
+	public int h2() {
+		return state.h2();
+	}
+	
+	public boolean isSolvable() {
+		return state.isSolvable();
+	}
+	
 	protected BoardNode childNode(Coordinates action) {
 		BoardNode newChildNode = new BoardNode(state.processMove(action), action.getActionIdentifier(), pathCost+1, depth+1, this);
 		return newChildNode;

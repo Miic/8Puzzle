@@ -22,13 +22,20 @@ public class Main {
 		
 		BoardGraph tree = new BoardGraph(new Board(parsedArray));
 		
-		System.out.println("Beginning Uniform Cost Search...");
-		float startTime = System.currentTimeMillis();
-		List<BoardNode> solution = tree.uniformCostSearch();
-		System.out.println("Solution found in : " + (System.currentTimeMillis() - startTime) + "ms");
+		System.out.println("Beginning A*(h2) Search...");
 		
-		for(int i = 0; i < solution.size(); i++) {
-			System.out.println("\n=========[ Step " + i + " ]==========\n\nAction - " + solution.get(i).getAction() + "\n\n" + solution.get(i) + "\n==============================\n");
+		float startTime = System.currentTimeMillis();
+		List<BoardNode> solution = tree.aStarH2();
+		startTime = System.currentTimeMillis() - startTime;
+		System.out.println("Solution found in : " + startTime + "ms");
+		
+		if (solution != null) {
+			System.out.println("\nNote: Step 0 is initial state re-cap");
+			for(int i = 0; i < solution.size(); i++) {
+				System.out.println("=========[ Step " + i + " ]==========\n\nAction - " + solution.get(i).getAction() + "\n\nResult:\n" + solution.get(i) + "\n==============================\n");
+			}
+		} else {
+			System.out.println("Board is unsolvable!");
 		}
 	}
 }
