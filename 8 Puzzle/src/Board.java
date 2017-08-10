@@ -32,9 +32,11 @@ public class Board {
 	
 	public boolean isSolvable() {
 		int counter = 0;
-		for(int i = 0; i < 9; i++) {
-			if ( i+1 < 9 && board[i/3][i%3] != 0 && board[(i+1)/3][(i+1)%3] != 0 &&  board[i/3][i%3] < board[(i+1)/3][(i+1)%3]) {
-				counter++;
+		for(int i = 0; i < 9 - 1; i++) {
+			for (int j = i+1; j < 9; j++) {
+				if ( i+1 < 9 && board[i/3][i%3] != 0 && board[j/3][j%3] != 0 &&  board[i/3][i%3] > board[j/3][j%3]) {
+					counter++;
+				}
 			}
 		}
 		return (counter % 2 == 0);
@@ -102,7 +104,11 @@ public class Board {
 		StringBuilder sb = new StringBuilder();
 		for(int i = 0; i < board.length; i++) {
 			for(int j = 0; j < board[i].length; j++) {
-				sb.append(board[i][j] + " ");
+				if (board[i][j] != 0) {
+					sb.append(board[i][j] + " ");
+				} else {
+					sb.append("  ");
+				}
 			}
 			sb.append("\n");
 		}
