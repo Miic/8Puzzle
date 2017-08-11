@@ -2,6 +2,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 import java.util.Scanner;
+import java.util.Stack;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class Main {
@@ -119,16 +120,19 @@ public class Main {
 		}
 		Board board = new Board(table);
 		if (depth > 0) {
-			Board lastState = null;
+			System.out.println("\nGenerating Random Board...");
+			Stack<Board> states = new Stack<Board>();
 			Board newState = null;
 			for(int i = 0; i < depth; i++) {
-				newState = board.getPossibleStates().get(board.getAdjacent().get(ThreadLocalRandom.current().nextInt(0, board.getPossibleStates().size() - 1)).getActionIdentifier());
-				while (lastState != null && lastState.equals(newState)) {
-					newState = board.getPossibleStates().get(board.getAdjacent().get(ThreadLocalRandom.current().nextInt(0, board.getPossibleStates().size() - 1)).getActionIdentifier());
+				System.out.println("  Generated Depth: " + (i + 1));
+				newState = board.getPossibleStates().get(board.getAdjacent().get(ThreadLocalRandom.current().nextInt(0, board.getPossibleStates().size())).getActionIdentifier());
+				while (!states.isEmpty() && states.contains(newState)) {
+					newState = board.getPossibleStates().get(board.getAdjacent().get(ThreadLocalRandom.current().nextInt(0, board.getPossibleStates().size())).getActionIdentifier());
 				}
-				lastState = board;
+				states.push(board);
 				board = newState;
 			}
+			System.out.println();
 		}
 		return board;
 	}
