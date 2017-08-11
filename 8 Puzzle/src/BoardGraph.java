@@ -16,65 +16,6 @@ public class BoardGraph {
 		root = new BoardNode(board);
 	}
 	
-	public List<BoardNode> uniformCostSearch() {
-		PriorityQueue<BoardNode> frontier;
-		Hashtable<BoardNode, Boolean> explored;
-		frontier = new PriorityQueue<BoardNode>(10, new BoardNodeComparator());
-		frontier.add(root);
-		explored = new Hashtable<BoardNode, Boolean>();
-		
-		BoardNode node = frontier.peek();
-		
-		if (!node.isSolvable()) {
-			return null;
-		}
-		
-		while (true) {
-			if (frontier.isEmpty()) {
-				return null;
-			}
-			
-			node = frontier.poll();
-			
-			if (node.isGoal()) {
-				List<BoardNode> returnList = new ArrayList<BoardNode>();
-				while(node.getParent() != null) {
-					returnList.add(0, node);
-					node = node.getParent();
-				}
-				returnList.add(0, node);
-				return returnList;
-			}
-			
-			explored.put(node, true);
-			
-			if (node.getDepth() <= 31) { // All 8 Puzzle problems can be solved in 31 moves or less.
-			
-				List<Coordinates> actions = node.getState().getAdjacent();
-				BoardNode actionNode;
-			
-				for (Coordinates coords : actions) {
-					actionNode = node.childNode(coords);
-					if (!frontier.contains(actionNode) && !explored.containsKey(actionNode)) {
-						frontier.add(actionNode);
-					} else if (frontier.contains(actionNode)) {
-						Iterator<BoardNode> it = frontier.iterator();
-						BoardNode itNode;
-						while (it.hasNext()) {
-							itNode = it.next();
-							if (itNode.equals(actionNode) && itNode.getPathCost() > actionNode.getPathCost()) {
-								frontier.remove(actionNode);
-								frontier.add(actionNode);
-								break;
-							}
-						}
-					}
-				}
-			}
-			
-		}
-	}
-	
 	public List<BoardNode> aStarH1() {
 		PriorityQueue<BoardNode> frontier;
 		Hashtable<BoardNode, Boolean> explored;
@@ -151,9 +92,8 @@ public class BoardGraph {
 			if (frontier.isEmpty()) {
 				return null;
 			}
-			
+			System.out.println(frontier.peek() + " " + frontier.peek().getPathCost() + " " + frontier.peek().h2());
 			node = frontier.poll();
-			
 			if (node.isGoal()) {
 				List<BoardNode> returnList = new ArrayList<BoardNode>();
 				while(node.getParent() != null) {
@@ -163,10 +103,9 @@ public class BoardGraph {
 				returnList.add(0, node);
 				return returnList;
 			}
-			
 			explored.put(node, true);
 			
-			if (node.getDepth() <= 31) { // All 8 Puzzle problems can be solved in 31 moves or less.
+			if (node.getDepth() <= 31) {
 			
 				List<Coordinates> actions = node.getState().getAdjacent();
 				BoardNode actionNode;
@@ -176,16 +115,8 @@ public class BoardGraph {
 					if (!frontier.contains(actionNode) && !explored.containsKey(actionNode)) {
 						frontier.add(actionNode);
 					} else if (frontier.contains(actionNode)) {
-						Iterator<BoardNode> it = frontier.iterator();
-						BoardNode itNode;
-						while (it.hasNext()) {
-							itNode = it.next();
-							if (itNode.equals(actionNode) && itNode.getPathCost() + itNode.h2() > actionNode.getPathCost() + actionNode.h2()) {
-								frontier.remove(actionNode);
-								frontier.add(actionNode);
-								break;
-							}
-						}
+						frontier.add(actionNode);
+						frontier.remove(actionNode);
 					}
 				}
 			}

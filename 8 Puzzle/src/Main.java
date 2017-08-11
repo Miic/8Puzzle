@@ -24,16 +24,16 @@ public class Main {
 		
 		System.out.println("Beginning A*(h2) Search...");
 		
-		float startTime = System.currentTimeMillis();
+		long startTime = System.nanoTime();
 		List<BoardNode> solution = tree.aStarH2();
-		startTime = System.currentTimeMillis() - startTime;
-		System.out.println("Solution found in : " + startTime + "ms");
+		startTime = System.nanoTime() - startTime;
 		
 		if (solution != null) {
 			System.out.println("\nNote: Step 0 is initial state re-cap");
 			for(int i = 0; i < solution.size(); i++) {
 				System.out.println("=========[ Step " + i + " ]==========\n\nAction - " + solution.get(i).getAction() + "\n\nResult:\n" + solution.get(i) + "\n==============================\n");
 			}
+			System.out.println("Solution found in : " + startTime * 0.000000001 + "s" );
 		} else {
 			System.out.println("Board is unsolvable!");
 		}

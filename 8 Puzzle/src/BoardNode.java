@@ -59,7 +59,7 @@ public class BoardNode {
 	}
 	
 	protected BoardNode childNode(Coordinates action) {
-		BoardNode newChildNode = new BoardNode(state.processMove(action), action.getActionIdentifier(), pathCost+1, depth+1, this);
+		BoardNode newChildNode = new BoardNode(state.processMove(action), action.getActionIdentifier(), 1, 1, this);
 		return newChildNode;
 	}
 	
