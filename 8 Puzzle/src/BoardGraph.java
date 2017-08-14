@@ -8,10 +8,6 @@ public class BoardGraph {
 	
 	private BoardNode root;
 	
-	/*
-	 * Note: The hardest possible 8 Puzzle problem takes up to 31 moves to solve. Therefore, we can limit the depth to 31
-	 */
-	
 	public BoardGraph(Board board) {
 		root = new BoardNode(board);
 	}
